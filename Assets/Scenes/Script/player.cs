@@ -10,6 +10,7 @@ public class player : MonoBehaviour
     private float V;
     private float MX;
     private bool OnTrigger;
+    private Vector3 point;
     //private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -26,16 +27,22 @@ public class player : MonoBehaviour
         V = Input.GetAxis("Vertical");
         MX = Input.GetAxis("Mouse X");
         // rb.AddForce(H * speed * Time.deltaTime, 0, V * speed * Time.deltaTime);
-        if(!OnTrigger)
-        { transform.Translate(H * speed * Time.deltaTime, 0, V * speed * Time.deltaTime); }        
+        point = transform.position;
+        if (!OnTrigger)
+        { 
+            transform.Translate(H * speed * Time.deltaTime, 0, V * speed * Time.deltaTime);
+        }
+        //transform.Translate(H * speed * Time.deltaTime, 0, V * speed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, MX *Rspeed, 0) * transform.rotation;
     }
-    private void OnCollisionrEnter(Collider other)
+    
+    private void OnTriggerEnter(Collider other)
     {
         OnTrigger = true;
     }
-    private void OnCollisionExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         OnTrigger = false;
     }
+    
 }
