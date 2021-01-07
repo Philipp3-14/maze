@@ -14,7 +14,8 @@ public class camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Player.transform.position;
+        if (!player.OnTrigger)
+        { transform.position = Player.transform.position; }
         transform.rotation = Player.transform.rotation;
     }
 }
