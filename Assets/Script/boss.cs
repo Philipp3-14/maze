@@ -17,7 +17,7 @@ public class boss : MonoBehaviour
     {
         GetComponent<Transform>().LookAt(Player);
         transform.Translate(0,0,speed * Time.deltaTime);
-        if (player.level>15)
+        if (player.level<20)
         { gameObject.SetActive(false); }
         else
         { gameObject.SetActive(true); }
