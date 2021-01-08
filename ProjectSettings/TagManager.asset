@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
+  - Key
+  - player
+  - boss
+  - gate
   layers:
   - Default
   - TransparentFX

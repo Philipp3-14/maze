@@ -10,8 +10,13 @@ public class player : MonoBehaviour
     private float V;
     private float MX;
     static public bool OnTrigger;
-    private Vector3 point;
+    //private Vector3 point;
     public float M;
+    static public int kyeNum=0;
+    public GameObject Kye;
+    int[] planpos = new int[13];
+    int i, j;
+    //static public int level=5;
     //private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -19,11 +24,20 @@ public class player : MonoBehaviour
     {
        // rb = GetComponent<Rigidbody>();
         transform.position = new Vector3(-24, 1, -24);
+        j = 0;
+        for (i = -24; i <= 24; i = i + 4)
+        {
+            planpos[j] = i;
+            j++;
+        }
+        for (i = 0; i < 3; i++)
+        { Instantiate(Kye, new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]), transform.rotation); }
     }
 
     // Update is called once per frame
     void Update()
     {
+         
         H = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         V = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         MX = Input.GetAxis("Mouse X");
@@ -48,13 +62,25 @@ public class player : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
-        
-        OnTrigger = true;
+        if (other.gameObject.tag == "Wall")
+        { OnTrigger = true; }
+        if (other.gameObject.tag == "Key")
+        { kyeNum++;}
+        if (other.gameObject.tag == "boss")
+        { 
+            kyeNum--;
+            Instantiate(Kye, new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]), transform.rotation);
+        }
+        if (other.gameObject.tag == "gate")
+        {
+            transform.position = new Vector3(-24, 1, -24);
+            for (i = 0; i < 3; i++)
+            { Instantiate(Kye, new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]), transform.rotation); }
+            //level++;
+        }
     }
-    
     private void OnTriggerExit(Collider other)
     {
-        OnTrigger = false;
+        OnTrigger =false;
     }
-    
 }
