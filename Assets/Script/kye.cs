@@ -7,6 +7,7 @@ public class kye : MonoBehaviour
     public float Rspeed;
     public float addSpeed;
     private float udSpeed;
+    private int liveLevel;
     //int[] planpos=new int [13];
     //int i,j;
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class kye : MonoBehaviour
         }
         transform.position = new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]);
         */
+        liveLevel = player.level;
     }
 
     // Update is called once per frame
@@ -39,6 +41,8 @@ public class kye : MonoBehaviour
             { transform.Translate(0, udSpeed * Time.deltaTime, 0); }
             udSpeed += addSpeed*Time.deltaTime;
         }
+        if (player.level != liveLevel)
+        {Destroy(gameObject); }
     }
     private void OnTriggerEnter(Collider other)
     {

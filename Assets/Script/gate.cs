@@ -29,7 +29,10 @@ public class gate : MonoBehaviour
             { transform.Translate(0, udSpeed * Time.deltaTime, 0); }
             udSpeed += addSpeed * Time.deltaTime;
         }
-        if (player.levelChang)
-        { transform.position = new Vector3(player.level * 2 - 2, 0, player.level * 2 - 2); }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "player" && player.kyeNum >= 1)
+        { transform.position = new Vector3(player.level * 2+2 , 0, player.level * 2+2); }
     }
 }

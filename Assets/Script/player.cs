@@ -72,11 +72,12 @@ public class player : MonoBehaviour
             kyeNum--;
             Instantiate(Kye, new Vector3(planpos[Random.Range(0, (level / 2) + 1)], 1, planpos[Random.Range(0, (level / 2) + 1)]), transform.rotation);
         }
-        if (other.gameObject.tag == "gate")
+        if (other.gameObject.tag == "gate" && kyeNum>=1)
         {
             transform.position = new Vector3(0, 1, 0);
             for (i = 0; i < (level / 10) + 1; i++)
             { Instantiate(Kye, new Vector3(planpos[Random.Range(0, (level / 2) + 1)], 1, planpos[Random.Range(0, (level / 2) + 1)]), transform.rotation); }
+            kyeNum = 0;
             level+=2;
             levelChang = true;
         }
