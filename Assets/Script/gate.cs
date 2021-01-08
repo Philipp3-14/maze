@@ -10,7 +10,7 @@ public class gate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        transform.position = new Vector3(player.level * 2 - 2, 0, player.level * 2 - 2);
     }
 
     // Update is called once per frame
@@ -29,5 +29,7 @@ public class gate : MonoBehaviour
             { transform.Translate(0, udSpeed * Time.deltaTime, 0); }
             udSpeed += addSpeed * Time.deltaTime;
         }
+        if (player.levelChang)
+        { transform.position = new Vector3(player.level * 2 - 2, 0, player.level * 2 - 2); }
     }
 }

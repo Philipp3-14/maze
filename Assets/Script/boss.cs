@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class boss : MonoBehaviour
 {
-    int[] planpos = new int[13];
-    int i, j;
     public float speed;
-    public Transform player;
+    public Transform Player;
     // Start is called before the first frame update
     void Start()
     {
-        j = 0;
-        for (i = -24; i <= 24; i = i + 4)
-        {
-            planpos[j] = i;
-            j++;
-        }
-        transform.position = new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]);
+        transform.position = new Vector3(player.planpos[Random.Range(0, (player.level / 2) + 1)], 1, player.planpos[Random.Range(0, (player.level / 2) + 1)]);
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Transform>().LookAt(player);
+        GetComponent<Transform>().LookAt(Player);
         transform.Translate(0,0,speed * Time.deltaTime);
+        if (player.level>15)
+        { gameObject.SetActive(false); }
+        else
+        { gameObject.SetActive(true); }
     }
 }

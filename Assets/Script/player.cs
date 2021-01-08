@@ -14,24 +14,25 @@ public class player : MonoBehaviour
     public float M;
     static public int kyeNum=0;
     public GameObject Kye;
-    int[] planpos = new int[13];
+    static public int[] planpos = new int[13];
     int i, j;
-    //static public int level=5;
+    static public int level=5;
+    static public bool levelChang;
     //private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
        // rb = GetComponent<Rigidbody>();
-        transform.position = new Vector3(-24, 1, -24);
+        transform.position = new Vector3(0, 1, 0);
         j = 0;
-        for (i = -24; i <= 24; i = i + 4)
+        for (i = 0; i < 2 * player.level; i+=4)
         {
             planpos[j] = i;
             j++;
         }
-        for (i = 0; i < 3; i++)
-        { Instantiate(Kye, new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]), transform.rotation); }
+        for (i = 0; i <(level/10)+1; i++)
+        { Instantiate(Kye, new Vector3(planpos[Random.Range(0, (level/2)+1)], 1, planpos[Random.Range(0, (level / 2) + 1)]), transform.rotation); }
     }
 
     // Update is called once per frame
@@ -69,14 +70,15 @@ public class player : MonoBehaviour
         if (other.gameObject.tag == "boss")
         { 
             kyeNum--;
-            Instantiate(Kye, new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]), transform.rotation);
+            Instantiate(Kye, new Vector3(planpos[Random.Range(0, (level / 2) + 1)], 1, planpos[Random.Range(0, (level / 2) + 1)]), transform.rotation);
         }
         if (other.gameObject.tag == "gate")
         {
-            transform.position = new Vector3(-24, 1, -24);
-            for (i = 0; i < 3; i++)
-            { Instantiate(Kye, new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]), transform.rotation); }
-            //level++;
+            transform.position = new Vector3(0, 1, 0);
+            for (i = 0; i < (level / 10) + 1; i++)
+            { Instantiate(Kye, new Vector3(planpos[Random.Range(0, (level / 2) + 1)], 1, planpos[Random.Range(0, (level / 2) + 1)]), transform.rotation); }
+            level+=2;
+            levelChang = true;
         }
     }
     private void OnTriggerExit(Collider other)

@@ -4,28 +4,40 @@ using UnityEngine;
 
 public class WallMaker : MonoBehaviour
 {
-    private float stap = 2;
+    //private float stap = 2;
     public GameObject wall;
     public GameObject plant;
     int i, j;
     // Start is called before the first frame update
     void Start()
     {
-        for (j = -25; j <= 25; j += 2)
+        for (j = 0; j < 2*player.level; j += 2)
         {
-            for (i = -24; i <= 24; i += 2)
+            for (i = 0; i < 2 * player.level; i += 2)
             {
                 transform.position = new Vector3(j, 0, i);
                 Instantiate(plant, transform.position, transform.rotation);
 
             }
         }
-        MakeMazie(25);
+        MakeMazie(player.level);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player.levelChang)
+        {
+            for (j = 0; j < 2 * player.level; j += 2)
+            {
+                for (i = 0; i < 2 * player.level; i += 2)
+                {
+                    transform.position = new Vector3(j, 0, i);
+                    Instantiate(plant, transform.position, transform.rotation);
+                }
+            }
+            MakeMazie(player.level);
+        }
 
     }
     void MakeMazie(int sise)
@@ -159,13 +171,14 @@ public class WallMaker : MonoBehaviour
                 { mazi[i + 1, j + 1] = 0; }
             }
         }
+        player.levelChang = false;
         for (i = 0; i < sise + 2; i++)
         {
             for (j = 0; j < sise + 2; j++)
             {
                 if (mazi[i, j] == 1)
                 {
-                    Instantiate(wall, new Vector3(2 * i - 26, 1, 2 * j - 26), transform.rotation);
+                    Instantiate(wall, new Vector3(2 * i-2, 1, 2 * j-2 ), transform.rotation);
                 }
             }
         }
