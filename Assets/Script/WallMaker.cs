@@ -20,7 +20,7 @@ public class WallMaker : MonoBehaviour
 
             }
         }
-        MakeMazie(player.level);
+        makeMaze(player.level);
     }
 
     // Update is called once per frame
@@ -36,147 +36,135 @@ public class WallMaker : MonoBehaviour
                     Instantiate(plant, transform.position, transform.rotation);
                 }
             }
-            MakeMazie(player.level);
+            makeMaze(player.level);
         }
 
     }
-    void MakeMazie(int sise)
+    void makeMaze(int size)
     {
         int i, j;
-        int[,] chis = new int[sise, sise];
-        for (i = 0; i < sise; i++)
+        int[,] grid = new int[size, size];
+        for (i = 0; i < size; i++)
         {
-            for (j = 0; j < sise; j++)
-            {chis[i, j] = 1;}
+            for (j = 0; j < size; j++)
+            {grid[i, j] = 1;}
         }
-        int[] plan = new int[2];
+        int[] place = new int[2];
         for (i = 0; i < 2; i++)
-        { plan[i] = 0; }
-        chis[0, 0] = 0;
-        int[] stap = new int[((sise + 1) / 2) * ((sise + 1) / 2)];
-        for (i = 0; i < ((sise + 1) / 2) * ((sise + 1) / 2); i++)
-        { stap[i] = 0; }
-        int con = 1;
+        { place[i] = 0; }
+        grid[0, 0] = 0;
+        int[] step = new int[((size + 1) / 2) * ((size + 1) / 2)];
+        for (i = 0; i < ((size + 1) / 2) * ((size + 1) / 2); i++)
+        { step[i] = 0; }
+        int count = 1;
         int stapNum = 0;
-        while (con < ((sise + 1) / 2) * ((sise + 1) / 2))
+        while (count < ((size + 1) / 2) * ((size + 1) / 2))
         {
-            int[] nesw = new int[4];
+            int[] direction = new int[4];
             for (i = 0; i < 4; i++)
-            { nesw[i] = 0; }
-            if (plan[0] > 1)
+            { direction[i] = 0; }
+            if (place[0] > 1)
             {
-                if (chis[plan[0] - 2, plan[1]] == 1)
-                { nesw[0] = 1; }
+                if (grid[place[0] - 2, place[1]] == 1)
+                { direction[0] = 1; }
             }
-            if (plan[1] < sise - 1)
+            if (place[1] < size - 1)
             {
-                if (chis[plan[0], plan[1] + 2] == 1)
-                { nesw[1] = 1; }
+                if (grid[place[0], place[1] + 2] == 1)
+                { direction[1] = 1; }
             }
-            if (plan[0] < sise - 1)
+            if (place[0] < size - 1)
             {
-                if (chis[plan[0] + 2, plan[1]] == 1)
-                { nesw[2] = 1; }
+                if (grid[place[0] + 2, place[1]] == 1)
+                { direction[2] = 1; }
             }
-            if (plan[1] > 1)
+            if (place[1] > 1)
             {
-                if (chis[plan[0], plan[1] - 2] == 1)
-                { nesw[3] = 1; }
+                if (grid[place[0], place[1] - 2] == 1)
+                { direction[3] = 1; }
             }
-            int chaknesw = 0;
+            int checkDirection = 0;
             for (i = 0; i < 4; i++)
             {
-                if (nesw[i] == 1)
+                if (direction[i] == 1)
                 {
-                    chaknesw = 1;
+                    checkDirection = 1;
                     break;
                 }
             }
-            if (chaknesw == 1)
+            if (checkDirection == 1)
             {
                 i = 0;
-                int neswNum;
+                int directionNumber;
                 while (true)
                 {
-                    neswNum = Random.Range(0, 4);
-                    if (nesw[neswNum] == 1)
+                    directionNumber = Random.Range(0, 4);
+                    if (direction[directionNumber] == 1)
                     { break; }
                     i++;
                 }
-                if (neswNum == 0)
+                if (directionNumber == 0)
                 {
-                    chis[plan[0] - 1, plan[1]] = 0;
-                    chis[plan[0] - 2, plan[1]] = 0;
-                    plan[0] = plan[0] - 2;
+                    grid[place[0] - 1, place[1]] = 0;
+                    grid[place[0] - 2, place[1]] = 0;
+                    place[0] = place[0] - 2;
                 }
-                else if (neswNum == 1)
+                else if (directionNumber == 1)
                 {
-                    chis[plan[0], plan[1] + 1] = 0;
-                    chis[plan[0], plan[1] + 2] = 0;
-                    plan[1] = plan[1] + 2;
+                    grid[place[0], place[1] + 1] = 0;
+                    grid[place[0], place[1] + 2] = 0;
+                    place[1] = place[1] + 2;
                 }
-                else if (neswNum == 2)
+                else if (directionNumber == 2)
                 {
-                    chis[plan[0] + 1, plan[1]] = 0;
-                    chis[plan[0] + 2, plan[1]] = 0;
-                    plan[0] = plan[0] + 2;
+                    grid[place[0] + 1, place[1]] = 0;
+                    grid[place[0] + 2, place[1]] = 0;
+                    place[0] = place[0] + 2;
                 }
                 else
                 {
-                    chis[plan[0], plan[1] - 1] = 0;
-                    chis[plan[0], plan[1] - 2] = 0;
-                    plan[1] = plan[1] - 2;
+                    grid[place[0], place[1] - 1] = 0;
+                    grid[place[0], place[1] - 2] = 0;
+                    place[1] = place[1] - 2;
                 }
-                stap[stapNum] = neswNum;
+                step[stapNum] = directionNumber;
                 stapNum++;
-                con++;
-                /*
-                for(i=0;i<5;i++)
-                {
-                  for(j=0;j<5;j++)
-                    {cout<<chis[i][j];}
-                  cout<<endl;
-                }
-                cout<<endl;
-                for(i=0;i<9;i++)
-                {cout<<stap[i];}
-                cout<<endl<<endl;
-                */
+                count++;
             }
             else
             {
                 stapNum--;
-                if (stap[stapNum] == 0)
-                { plan[0] = plan[0] + 2; }
-                else if (stap[stapNum] == 1)
-                { plan[1] = plan[1] - 2; }
-                else if (stap[stapNum] == 2)
-                { plan[0] = plan[0] - 2; }
+                if (step[stapNum] == 0)
+                { place[0] = place[0] + 2; }
+                else if (step[stapNum] == 1)
+                { place[1] = place[1] - 2; }
+                else if (step[stapNum] == 2)
+                { place[0] = place[0] - 2; }
                 else
-                { plan[1] = plan[1] + 2; }
-                stap[stapNum] = 0;
+                { place[1] = place[1] + 2; }
+                step[stapNum] = 0;
             }
         }
-        int[,] mazi = new int[sise + 2, sise + 2];
-        for (i = 0; i < sise + 2; i++)
+        int[,] maze = new int[size + 2, size + 2];
+        for (i = 0; i < size + 2; i++)
         {
-            for (j = 0; j < sise + 2; j++)
-            { mazi[i, j] = 1; }
+            for (j = 0; j < size + 2; j++)
+            { maze[i, j] = 1; }
         }
-        for (i = 0; i < sise; i++)
+        for (i = 0; i < size; i++)
         {
-            for (j = 0; j < sise; j++)
+            for (j = 0; j < size; j++)
             {
-                if (chis[i, j] == 0)
-                { mazi[i + 1, j + 1] = 0; }
+                if (grid[i, j] == 0)
+                { maze[i + 1, j + 1] = 0; }
             }
         }
         player.levelChang = false;
-        for (i = 0; i < sise + 2; i++)
+        for (i = 0; i < size + 2; i++)
         {
-            for (j = 0; j < sise + 2; j++)
+            for (j = 0; j < size + 2; j++)
             {
-                if (mazi[i, j] == 1)
+                if (maze[i, j] == 1)
                 {
                     Instantiate(wall, new Vector3(2 * i-2, 1, 2 * j-2 ), transform.rotation);
                 }

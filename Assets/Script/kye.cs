@@ -8,20 +8,13 @@ public class kye : MonoBehaviour
     public float addSpeed;
     private float udSpeed;
     private int liveLevel;
-    //int[] planpos=new int [13];
-    //int i,j;
     // Start is called before the first frame update
     void Start()
     {
-        /*
-        j = 0;
-        for(i=-24;i<=24;i=i+4)
+        if (transform.position == new Vector3(player.level * 2 - 2, 0, player.level * 2 - 2))
         {
-            planpos[j] = i;
-            j++;
+            transform.position = new Vector3(player.planpos[Random.Range(0, 12)], 1, player.planpos[Random.Range(0, 12)]);
         }
-        transform.position = new Vector3(planpos[Random.Range(0, 12)], 1, planpos[Random.Range(0, 12)]);
-        */
         liveLevel = player.level;
     }
 

@@ -16,6 +16,10 @@ public class gate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player.kyeNum >=1)
+        { gameObject.GetComponent<Renderer>().enabled = true; }
+        else
+        { gameObject.GetComponent<Renderer>().enabled = false; }
         transform.rotation = Quaternion.Euler(0, Rspeed * Time.deltaTime, 0) * transform.rotation;
         if (transform.position.y >= 1)
         {
